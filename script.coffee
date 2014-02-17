@@ -47,6 +47,7 @@ $ ->
     set_val(col, row, value)
 
   swipe_columns = (row_diff, row_start, row_end, scroll_fun) ->
+    swiped = []
     for col in [0...4]
       joined = false
 
@@ -61,9 +62,13 @@ $ ->
           scroll_fun(col, row+row_diff, row_end)
 
       if joined
+        swiped.push col
         set_val(col, row_end, 0)
+    add_value_to = swiped[Math.floor(Math.random()*swiped.length)]
+    set_val(add_value_to, row_end, next_val())
 
   swipe_rows = (col_diff, column_start, column_end, scroll_fun) ->
+    swiped = []
     for row in [0...4]
       joined = false
 
@@ -78,7 +83,10 @@ $ ->
           scroll_fun(col+col_diff, column_end, row)
 
       if joined
+        swiped.push row
         set_val(column_end, row, 0)
+    add_value_to = swiped[Math.floor(Math.random()*swiped.length)]
+    set_val(column_end, add_value_to, next_val())
 
   swipe_up = -> swipe_columns(1, 0, 3, scroll_up)
   swipe_down = -> swipe_columns(-1, 3, 0, scroll_down)
@@ -105,3 +113,10 @@ $ ->
       when 38 then swipe_up()
       when 39 then swipe_right()
       when 40 then swipe_down()
+
+  # TODO: When the max value of the board is big, it can return bigger numbers. I got even 48 when max is 384
+  VALUES_PROB = [[1, .33], [2, .66], [3, 1]]
+  next_val = ->
+    rand = Math.random()
+    for [value, ratio] in VALUES_PROB
+      return value if ratio >= rand
