@@ -120,3 +120,14 @@ $ ->
     rand = Math.random()
     for [value, ratio] in VALUES_PROB
       return value if ratio >= rand
+
+  NEW_BOARD_PROB = [[0, .6], [1, .75], [2, .90], [3, 1]]
+  reset = ->
+    for row in [0...4]
+      for col in [0...4]
+        do () ->
+          rand = Math.random()
+          for [value, ratio] in NEW_BOARD_PROB
+            return set_val(row, col, value) if ratio >= rand
+  reset()
+  $("#reset").click reset
