@@ -1,0 +1,39 @@
+body{
+}
+#board{
+  font-size: 3em;
+  tr{
+    td{
+      width: 2em;
+      height: 2em;
+      border: 1px solid black;
+      text-align: center;
+      font-weight: bold;
+      position: relative;
+      &:hover{
+        .up, .down { visibility: visible; }
+      }
+      .up, .down {
+        text-decoration: none;
+        font-size: 0.5em;
+        visibility: hidden;
+        background-color: red;
+        display: block;
+        line-height: 29px;
+        width: 100%;
+        height: 1em;
+        position: absolute;
+        left: 0;
+        color: blue;
+      }
+      .up {
+        top:0;
+        &:before{ content:"\25B2";}
+      }
+      .down {
+        bottom:0;
+        &:before{ content:"\25BC";}
+      }
+    }
+  }
+}
