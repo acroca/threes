@@ -64,8 +64,13 @@ $ ->
       if joined
         swiped.push col
         set_val(col, row_end, 0)
-    add_value_to = swiped[Math.floor(Math.random()*swiped.length)]
-    set_val(add_value_to, row_end, next_val())
+
+    if swiped.length > 0
+      add_value_to = swiped[Math.floor(Math.random()*swiped.length)]
+      set_val(add_value_to, row_end, next_val())
+      true
+    else
+      false
 
   swipe_rows = (col_diff, column_start, column_end, scroll_fun) ->
     swiped = []
@@ -85,8 +90,14 @@ $ ->
       if joined
         swiped.push row
         set_val(column_end, row, 0)
-    add_value_to = swiped[Math.floor(Math.random()*swiped.length)]
-    set_val(column_end, add_value_to, next_val())
+
+    if swiped.length > 0
+      add_value_to = swiped[Math.floor(Math.random()*swiped.length)]
+      set_val(column_end, add_value_to, next_val())
+      true
+    else
+      false
+
 
   swipe_up = -> swipe_columns(1, 0, 3, scroll_up)
   swipe_down = -> swipe_columns(-1, 3, 0, scroll_down)
@@ -131,3 +142,13 @@ $ ->
             return set_val(row, col, value) if ratio >= rand
   reset()
   $("#reset").click reset
+
+  can_move = ->
+    for row in [0...4]
+      for col in [0...4]
+        return true if data[col][row] == 0
+    for row in [0...3]
+      for col in [0...3]
+        return true if can_join(col, row, col+1, row)
+        return true if can_join(col, row, col, row+1)
+    false
