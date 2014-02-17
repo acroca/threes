@@ -68,8 +68,10 @@ $ ->
     if swiped.length > 0
       add_value_to = swiped[Math.floor(Math.random()*swiped.length)]
       set_val(add_value_to, row_end, next_val())
+      update_score()
       true
     else
+      update_score()
       false
 
   swipe_rows = (col_diff, column_start, column_end, scroll_fun) ->
@@ -94,8 +96,10 @@ $ ->
     if swiped.length > 0
       add_value_to = swiped[Math.floor(Math.random()*swiped.length)]
       set_val(column_end, add_value_to, next_val())
+      update_score()
       true
     else
+      update_score()
       false
 
 
@@ -152,3 +156,18 @@ $ ->
         return true if can_join(col, row, col+1, row)
         return true if can_join(col, row, col, row+1)
     false
+
+  get_score = ->
+    total = 1
+    for row in [0...4]
+      for col in [0...4]
+        d = data[col][row]
+        if d >= 3
+          total += d^2
+    total
+
+  score = 0
+  update_score = ->
+    score = get_score()
+    console.log('''===> score: ''', score)
+    $("#total_score").html(score)
