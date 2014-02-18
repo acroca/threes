@@ -1,0 +1,35 @@
+body {
+  width: 400px;
+  margin: 0 auto; }
+
+#board {
+  width: 100%;
+  font-size: 2.5em; }
+  #board tr td {
+    height: 1.2em;
+    width: 25%;
+    border: 1px solid black;
+    text-align: center;
+    font-weight: bold;
+    position: relative;
+    border-radius: 4px;
+    box-shadow: 1px 2px 5px 0px rgba(50, 50, 50, 0.48); }
+    #board tr td:hover .up, #board tr td:hover .down {
+      visibility: visible; }
+    #board tr td .up, #board tr td .down {
+      text-decoration: none;
+      font-size: 0.25em;
+      line-height: 5em;
+      position: absolute;
+      visibility: hidden;
+      color: blue; }
+    #board tr td .up {
+      top: 0;
+      left: 0; }
+      #board tr td .up:before {
+        content: "\25B2"; }
+    #board tr td .down {
+      top: 0;
+      right: 0; }
+      #board tr td .down:before {
+        content: "\25BC"; }
